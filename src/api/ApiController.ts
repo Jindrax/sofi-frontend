@@ -4,7 +4,7 @@ import {userStore} from "src/store/userStore";
 export class ApiController {
   static userStore = userStore();
 
-  private static url: string = "http://" + location.hostname + ":8443";
+  private static url: string = "https://" + location.hostname + ":8443";
   // private static url: string = "https://sofiplus.com.co:8443";
 
   static async post(path: string, data: any) {

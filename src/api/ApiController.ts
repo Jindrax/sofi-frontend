@@ -4,8 +4,7 @@ import {userStore} from "src/store/userStore";
 export class ApiController {
   static userStore = userStore();
 
-  private static url: string = "https://" + location.hostname + ":8443";
-  // private static url: string = "https://sofiplus.com.co:8443";
+  private static url: string = process.env.NODE_ENV==="development"? "http://localhost:443" : location.protocol + "//" + location.hostname + (location.port? ":" + location.port : "");
 
   static async post(path: string, data: any) {
     return await axios.post(ApiController.url + path, data, ApiController.userStore.token !== "" ? {

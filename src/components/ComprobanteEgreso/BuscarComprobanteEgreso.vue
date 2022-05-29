@@ -1,6 +1,6 @@
 <template>
-  <EntityReportComponent :store="devolucionStore" :schema="esquema" @selected="select">
-    <visualizador-devolucion v-if="selected" :factura="selected"/>
+  <EntityReportComponent :store="comprobanteEgresoStore" :schema="esquema" @selected="select">
+    <visualizador-factura v-if="selected" :factura="selected"/>
   </EntityReportComponent>
 </template>
 
@@ -8,12 +8,13 @@
 import {presentCurrency} from "src/api/utils/CurrencyFormat";
 import {ResponsiveTableSchemaField} from "src/api/interfaces/ResponsiveTableInterfaces";
 import {SchemaFieldType} from "src/api/enums/SchemaFieldType";
+import {useFacturaStore} from "src/store/Facturas/facturaStore";
+import VisualizadorFactura from "components/Facturas/VisualizadorFactura.vue";
 import EntityReportComponent from "components/EntityReportComponent.vue";
 import {Ref, ref} from "vue";
-import {useDevolucionStore} from "src/store/Devolucion/devolucionStore";
-import VisualizadorDevolucion from "components/Devoluciones/VisualizadorDevolucion.vue";
+import {useComprobanteEgresoStore} from "src/store/ComprobanteEgreso/comprobanteEgresoStore";
 
-const devolucionStore = useDevolucionStore();
+const comprobanteEgresoStore = useComprobanteEgresoStore();
 const selected: Ref<any> = ref(undefined as any);
 
 function select(entity: any) {

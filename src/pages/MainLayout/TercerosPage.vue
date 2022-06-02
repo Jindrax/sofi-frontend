@@ -1,11 +1,8 @@
 <template>
   <q-page>
-    <tab-paneled-page :tabs="['Clientes', 'Proveedores']">
-      <template #Clientes>
+    <tab-paneled-page :tabs="['Terceros']">
+      <template #Terceros>
         <clientes-managing-component/>
-      </template>
-      <template #Proveedores>
-        <proveedores-managing-component/>
       </template>
     </tab-paneled-page>
   </q-page>

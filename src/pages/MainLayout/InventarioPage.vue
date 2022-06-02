@@ -3,6 +3,7 @@
     <tab-paneled-page :tabs="['Items', 'Servicios']">
       <template #Items>
         <items-managing-component/>
+
       </template>
       <template #Servicios>
         <servicios-managing-component/>

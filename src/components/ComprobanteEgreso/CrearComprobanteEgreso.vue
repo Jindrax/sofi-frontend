@@ -27,11 +27,12 @@
         <presentador>
           <q-input label="Cantidad" v-model="newEgreso.cantidad"></q-input>
           <q-input label="Por concepto de" v-model="newEgreso.porConceptoDe"></q-input>
+          <q-select v-model="newEgreso.tipoGasto" label="Tipo Gasto" :options="opcionesGasto" emit-value map-options/>
         </presentador>
         <br>
         <presentador>
-          <q-input label="Recibido de" v-model="newEgreso.clienteID" readonly @click="selectCliente"/>
-          <q-input label="Nombre" v-model="newEgreso.clienteNombre" readonly/>
+          <q-input label="Pagado A" v-model="newEgreso.pagadoA" readonly @click="selectCliente"/>
+          <q-input label="Nombre" v-model="newEgreso.terceroNombre" readonly/>
         </presentador>
         <br>
         <button-group :btns="[
@@ -70,14 +71,33 @@ import PresentadorUnitario from "components/PresentadorUnitario.vue";
 import {ComprobanteEgresoEntity} from "src/entities/ComprobanteEgresoEntity";
 import TercerosModalSelector from "components/Terceros/TercerosModalSelector.vue";
 import {useQuasar} from "quasar";
+import {useComprobanteEgresoStore} from "src/store/ComprobanteEgreso/comprobanteEgresoStore";
+import {ApiController} from "src/api/ApiController";
 
 const $q = useQuasar();
+
+const store = useComprobanteEgresoStore();
 
 const stickyHeight = ref(0);
 const newEgreso: Ref<ComprobanteEgresoEntity> = ref(new ComprobanteEgresoEntity({}));
 
 function save() {
   console.log(newEgreso.value);
+  const errors = store.validateComprobanteEgreso(newEgreso.value);
+  if (errors.length > 0) {
+    errors.forEach(error => {
+      $q.notify(error);
+    });
+  } else {
+    try {
+      store.registerComprobanteEgreso(newEgreso.value);
+      const response = ApiController.post("/egreso", newEgreso.value);
+      newEgreso.value = new ComprobanteEgresoEntity({});
+      $q.notify("Comprobante de egreso guardado exitosamente");
+    } catch (e) {
+      console.log(e);
+    }
+  }
 }
 
 function selectCliente() {
@@ -85,13 +105,36 @@ function selectCliente() {
     component: TercerosModalSelector,
   }).onOk((cliente: any) => {
     if (cliente.clienteID) {
-      newEgreso.value.recibidoDe = cliente.clienteID;
+      newEgreso.value.pagadoA = cliente.clienteID;
     } else {
-      newEgreso.value.recibidoDe = cliente.proveedorID;
+      newEgreso.value.pagadoA = cliente.proveedorID;
     }
-    newEgreso.value.clienteNombre = cliente.nombre;
+    newEgreso.value.terceroNombre = cliente.nombre;
   });
 }
+
+const opcionesGasto = [
+  {
+    label: "Gastos de personal",
+    value: "5105"
+  },
+  {
+    label: "Gastos de arriendo",
+    value: "5120"
+  },
+  {
+    label: "Gastos de mantenimiento",
+    value: "5145"
+  },
+  {
+    label: "Pago proveedores",
+    value: "2195"
+  },
+  {
+    label: "Otros gastos",
+    value: "5195"
+  }
+];
 </script>
 <style lang="scss" scoped>
 .total {

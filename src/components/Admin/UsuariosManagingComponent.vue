@@ -44,7 +44,8 @@ const usuariosSchema: EntityFieldSchema[] = [
     field: "rol",
     label: "Rol",
     responsive: true,
-    type: SchemaFieldType.STRING
+    type: SchemaFieldType.SELECTION,
+    options: ["USUARIO", "ADMIN"]
   }
 ];
 

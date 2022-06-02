@@ -12,6 +12,7 @@ export class FacturaEntity {
   totalItems: number;
   totalServicios: number;
   costoTotal: number;
+  totalImpuestos: number;
 
 
   constructor({
@@ -25,8 +26,9 @@ export class FacturaEntity {
                 clienteNombre,
                 costoTotal,
                 totalItems,
-                totalServicios
-              }: { id?: string, detalles?: ItemFactura[], fecha?: string, fechaVencimiento?: string, clienteID?: string, clienteNombre?: string, tipoPago?: string, total?: number, costoTotal?: number, totalItems?: number, totalServicios?: number }) {
+                totalServicios,
+                totalImpuestos
+              }: { id?: string, detalles?: ItemFactura[], fecha?: string, fechaVencimiento?: string, clienteID?: string, clienteNombre?: string, tipoPago?: string, total?: number, costoTotal?: number, totalItems?: number, totalServicios?: number, totalImpuestos?: number }) {
     this.id = id ? id : "";
     this.detalles = detalles ? detalles : [];
     this.fecha = fecha ? fecha : getNewDateString();
@@ -38,5 +40,6 @@ export class FacturaEntity {
     this.costoTotal = costoTotal ? costoTotal : 0;
     this.totalItems = totalItems ? totalItems : 0;
     this.totalServicios = totalServicios ? totalServicios : 0;
+    this.totalImpuestos = totalImpuestos ? totalImpuestos : 0;
   }
 }

@@ -330,6 +330,7 @@ function saveFactura() {
   let costoTotal = 0;
   let totalItems = 0;
   let totalServicios = 0;
+  let impuestos = 0;
   for (const item of newFactura.value.detalles) {
     costoTotal += item.costoTotal ? item.costoTotal : 0;
     switch (item.type) {
@@ -340,11 +341,13 @@ function saveFactura() {
         totalServicios += item.total;
         break;
     }
+    impuestos += item.precio * item.impuesto;
   }
   newFactura.value.costoTotal = costoTotal;
   newFactura.value.total = total.value;
   newFactura.value.totalItems = totalItems;
   newFactura.value.totalServicios = totalServicios;
+  newFactura.value.totalImpuestos = impuestos;
   emit("facturaCreada", newFactura.value);
   const errors = facturaStore.validateDevolucion(newFactura.value);
   if (errors.length > 0) {

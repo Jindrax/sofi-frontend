@@ -8,8 +8,7 @@ export class InsumoEntity {
   costo: number;
   fechaIngreso: string;
   type: string;
-
-
+  
   constructor({
                 codigo,
                 costo,

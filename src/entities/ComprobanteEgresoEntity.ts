@@ -6,22 +6,25 @@ export class ComprobanteEgresoEntity {
   fecha: string;
   cantidad: number;
   porConceptoDe: string;
-  recibidoDe: string;
-  clienteNombre: string;
+  pagadoA: string;
+  terceroNombre: string;
+  tipoGasto: string;
 
   constructor({
                 id,
                 cantidad,
                 porConceptoDe,
                 fecha,
-                recibidoDe,
-                clienteNombre
-              }: { id?: string, fecha?: string, cantidad?: number, porConceptoDe?: string, recibidoDe?: string, clienteNombre?: string }) {
+                pagadoA,
+                terceroNombre,
+    tipoGasto
+              }: { id?: string, fecha?: string, cantidad?: number, porConceptoDe?: string, pagadoA?: string, terceroNombre?: string, tipoGasto?: string }) {
     this.id = id ? id : uid();
     this.fecha = fecha ? fecha : getNewDateString();
     this.cantidad = cantidad ? cantidad : 0;
     this.porConceptoDe = porConceptoDe ? porConceptoDe : "";
-    this.recibidoDe = recibidoDe ? recibidoDe : "";
-    this.clienteNombre = clienteNombre ? clienteNombre : "";
+    this.pagadoA = pagadoA ? pagadoA : "";
+    this.terceroNombre = terceroNombre ? terceroNombre : "";
+    this.tipoGasto = tipoGasto? tipoGasto : "5195";
   }
 }

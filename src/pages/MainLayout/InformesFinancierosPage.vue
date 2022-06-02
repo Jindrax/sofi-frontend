@@ -21,8 +21,9 @@ import {ConsolidadoCuentaEntity} from "src/entities/ConsolidadoCuentaEntity";
 import {CuentaDetalleEntity} from "src/entities/CuentaDetalleEntity";
 import EstadoResultados from "components/Informes/EstadoResultados.vue";
 import {Ref, ref} from "vue";
+import {ApiController} from "src/api/ApiController";
 
-function requestSituacionFinanciera(){
+function requestSituacionFinanciera() {
   estado.value = undefined;
   informe.value = new InformeSituacionFinancieraEntity({
     dia: "31",
@@ -31,70 +32,72 @@ function requestSituacionFinanciera(){
   });
 }
 
-function requestEstadoResultados(){
+async function requestEstadoResultados() {
   informe.value = undefined;
-  estado.value = new InformeEstadoResultadosEntity({
-    dia: "31",
-    mes: "Mayo",
-    anno: "2022",
-    ingresos: new ConsolidadoCuentaEntity({
-      detalles: [
-        new CuentaDetalleEntity({
-          puc: "4195",
-          cuenta: "ingresos por servicios"
-        }),
-        new CuentaDetalleEntity({
-          puc: "4135",
-          cuenta: "ingresos por ventas"
-        }),
-        new CuentaDetalleEntity({
-          puc: "4275",
-          cuenta: "devoluciones",
-          negativo: true
-        }),
-      ]
-    }),
-    costos: new ConsolidadoCuentaEntity({
-      detalles: [
-        new CuentaDetalleEntity({
-          puc: "6135",
-          cuenta: "costos por insumos"
-        }),
-        new CuentaDetalleEntity({
-          puc: "6195",
-          cuenta: "costo de venta"
-        })
-      ]
-    }),
-    gastos: new ConsolidadoCuentaEntity({
-      detalles: [
-        new CuentaDetalleEntity({
-          puc: "5105",
-          cuenta: "gastos de personal"
-        }),
-        new CuentaDetalleEntity({
-          puc: "5115",
-          cuenta: "gasto en impuestos"
-        }),
-        new CuentaDetalleEntity({
-          puc: "5120",
-          cuenta: "arriendo"
-        }),
-        new CuentaDetalleEntity({
-          puc: "5145",
-          cuenta: "mantenimiento"
-        }),
-        new CuentaDetalleEntity({
-          puc: "5160",
-          cuenta: "depreciacion gasto"
-        }),
-        new CuentaDetalleEntity({
-          puc: "5195",
-          cuenta: "otros gastos"
-        })
-      ]
-    })
-  });
+  // estado.value = new InformeEstadoResultadosEntity({
+  //   dia: "31",
+  //   mes: "Mayo",
+  //   anno: "2022",
+  //   ingresos: new ConsolidadoCuentaEntity({
+  //     detalles: [
+  //       new CuentaDetalleEntity({
+  //         puc: "4195",
+  //         cuenta: "ingresos por servicios"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "4135",
+  //         cuenta: "ingresos por ventas"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "4275",
+  //         cuenta: "devoluciones",
+  //         negativo: true
+  //       }),
+  //     ]
+  //   }),
+  //   costos: new ConsolidadoCuentaEntity({
+  //     detalles: [
+  //       new CuentaDetalleEntity({
+  //         puc: "6135",
+  //         cuenta: "costos por insumos"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "6195",
+  //         cuenta: "costo de venta"
+  //       })
+  //     ]
+  //   }),
+  //   gastos: new ConsolidadoCuentaEntity({
+  //     detalles: [
+  //       new CuentaDetalleEntity({
+  //         puc: "5105",
+  //         cuenta: "gastos de personal"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "5115",
+  //         cuenta: "gasto en impuestos"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "5120",
+  //         cuenta: "arriendo"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "5145",
+  //         cuenta: "mantenimiento"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "5160",
+  //         cuenta: "depreciacion gasto"
+  //       }),
+  //       new CuentaDetalleEntity({
+  //         puc: "5195",
+  //         cuenta: "otros gastos"
+  //       })
+  //     ]
+  //   });
+  // });
+  const response = await ApiController.get("/informe/resultados");
+  estado.value = response;
 }
 
 const informe: Ref<InformeSituacionFinancieraEntity | undefined> = ref(undefined);

@@ -47,15 +47,15 @@ export const useDevolucionStore = defineStore("devolucion", {
         });
       });
     },
-    findByID(filter: string) {
+    async findByID(filter: string) {
       return [this.devolucionesByID[filter]];
     },
-    findByCliente(filter: string) {
+    async findByCliente(filter: string) {
       return Object.values(this.devolucionesByID).filter(devolucion => {
         return devolucion.clienteID.startsWith(filter);
       });
     },
-    findByFecha(filter: string) {
+    async findByFecha(filter: string) {
       return Object.values(this.devolucionesByID).filter(devolucion => {
         return devolucion.fecha == filter;
       });

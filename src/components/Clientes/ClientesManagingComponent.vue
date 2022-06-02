@@ -1,5 +1,5 @@
 <template>
-  <entity-managing-component :data="array" :entity-schema="clientesSchema" entity="cliente" :store="store"/>
+  <entity-managing-component :data="array" :entity-schema="clientesSchema" entity="Tercero" :store="store"/>
 </template>
 
 <script lang="ts" setup>

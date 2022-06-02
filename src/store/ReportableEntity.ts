@@ -1,5 +1,5 @@
 export interface ReportableEntityStore{
-  findByID(filter: string):any[];
-  findByCliente(filter: string):any[];
-  findByFecha(filter: string):any[];
+  findByID(filter: string):Promise<any[]>;
+  findByCliente(filter: string):Promise<any[]>;
+  findByFecha(filter: string):Promise<any[]>;
 }

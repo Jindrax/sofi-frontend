@@ -87,16 +87,16 @@ function selectAgente() {
   });
 }
 
-function search() {
+async function search() {
   switch (mode.value) {
     case "ID":
-      searchData.value = props.store.findByID(filter.value);
+      searchData.value = await props.store.findByID(filter.value);
       break;
     case "Cliente":
-      searchData.value = props.store.findByCliente(filter.value);
+      searchData.value = await props.store.findByCliente(filter.value);
       break;
     case "Fecha":
-      searchData.value = props.store.findByFecha(filter.value);
+      searchData.value = await props.store.findByFecha(filter.value);
       break;
   }
 }

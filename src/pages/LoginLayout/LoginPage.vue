@@ -43,10 +43,11 @@ async function login() {
         email: username.value,
         password: pass.value
       });
-      await store.login(response.data.nombre, response.data.rol, response.data.token);
+      console.log(response);
+      await store.login(response.nombre, response.rol, response.token);
       await router.push(`/usr=${store.name.replace(/\s/g,'')}/${store.getPermissions[0].key}`);
       setTimeout(async () => {
-        switch (response.data.rol) {
+        switch (response.rol) {
           case "ADMIN":
             await syncBackAdmin();
             break;

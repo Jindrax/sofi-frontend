@@ -1,5 +1,16 @@
 <template>
   <entity-managing-component :data="array" :entity-schema="itemsSchema" entity="item" :store="store"/>
+  <br>
+  <q-card>
+    <q-card-section>
+      <q-item>
+        <q-item-section>
+          <q-item-label>Carga de inventario</q-item-label>
+        </q-item-section>
+      </q-item>
+      <items-loading-component/>
+    </q-card-section>
+  </q-card>
 </template>
 
 <script lang="ts" setup>
@@ -9,6 +20,7 @@ import {storeToRefs} from "pinia";
 import {EntityFieldSchema} from "src/api/interfaces/EntityInterfaces";
 import {MeasureEngine} from "src/api/Items/MeasureEngine";
 import {SchemaFieldType} from "src/api/enums/SchemaFieldType";
+import ItemsLoadingComponent from "components/Items/ItemsLoadingComponent.vue";
 
 const itemsSchema: EntityFieldSchema[] = [
   {

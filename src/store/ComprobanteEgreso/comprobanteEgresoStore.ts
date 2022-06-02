@@ -1,5 +1,6 @@
 import {defineStore} from "pinia";
 import {ComprobanteEgresoEntity} from "src/entities/ComprobanteEgresoEntity";
+import {ApiController} from "src/api/ApiController";
 
 export const useComprobanteEgresoStore = defineStore("comprobanteEgreso", {
   state: () => {
@@ -11,8 +12,8 @@ export const useComprobanteEgresoStore = defineStore("comprobanteEgreso", {
   actions: {
     validateComprobanteEgreso(comprobanteEgreso: ComprobanteEgresoEntity) {
       const errors: string[] = [];
-      if (comprobanteEgreso.recibidoDe == "") {
-        errors.push("Debe seleccionar quien entrego el dinero");
+      if (comprobanteEgreso.pagadoA == "") {
+        errors.push("Debe seleccionar a quien entrego el dinero");
       }
       if (comprobanteEgreso.porConceptoDe == "") {
         errors.push("Debe especificar el concepto del egreso");
@@ -22,15 +23,24 @@ export const useComprobanteEgresoStore = defineStore("comprobanteEgreso", {
     registerComprobanteEgreso(comprobanteEgreso: ComprobanteEgresoEntity) {
       this.comprobantesEgresoByID[comprobanteEgreso.id] = comprobanteEgreso;
     },
-    findByID(filter: string) {
+    async findByID(filter: string) {
+      await ApiController.get(`/egreso/filtrar?tipo=EVENTO&`);
       return [this.comprobantesEgresoByID[filter]];
     },
-    findByCliente(filter: string) {
+    async findByCliente(filter: string) {
+      const backEntities = await ApiController.get(`/egreso/filtrar?tipo=EVENTOTERCERO&terceroID=${filter}`) as any[];
+      backEntities.forEach((egreso) => {
+        this.comprobantesEgresoByID[egreso.id] = new ComprobanteEgresoEntity(egreso);
+      });
       return Object.values(this.comprobantesEgresoByID).filter(factura => {
-        return factura.recibidoDe.startsWith(filter);
+        return factura.pagadoA.startsWith(filter);
       });
     },
-    findByFecha(filter: string) {
+    async findByFecha(filter: string) {
+      const backEntities = await ApiController.get(`/egreso/filtrar?tipo=EVENTOFECHA&fecha=${filter}`) as any[];
+      backEntities.forEach((egreso) => {
+        this.comprobantesEgresoByID[egreso.id] = new ComprobanteEgresoEntity(egreso);
+      });
       return Object.values(this.comprobantesEgresoByID).filter(factura => {
         return factura.fecha == filter;
       });

@@ -21,27 +21,27 @@ const recursoStore = useRecursoStore();
 
 const questions = [
   {
-    question: "Cual fue el mejor cameo de los illuminatis?",
-    a: "Profesor X",
-    b: "Reed Richards",
-    c: "Capitana Marvel",
-    d: "Capitana Carter",
+    question: "Cuantas facturas han sido emitidas esta semana?",
+    a: "Ninguna",
+    b: "27",
+    c: "15",
+    d: "5",
     solution: "b"
   },
   {
-    question: "Como se llama la antitesis del darkhold?",
-    a: "Libro de vishanty",
-    b: "Mein Kampf",
-    c: "Clifford el gran perro rojo",
-    d: "El capital",
+    question: "Cual es la finalidad del comprobante de egreso?",
+    a: "Soportar las salidas de dinero de la caja",
+    b: "Soportar las entradas de dinero a la caja",
+    c: "Realizar una venta",
+    d: "Ninguna de las anteriores",
     solution: "a"
   },
   {
-    question: "Que pasa si luis fonsi se da por vencido?",
-    a: "Big Crunch",
-    b: "Segundo periodo de Donald Trump",
-    c: "La presidencia de Petro",
-    d: "Nada",
+    question: "Cual cuenta se aumenta en una factura ",
+    a: "Cuentas por pagar",
+    b: "Patrimonio",
+    c: "Propiedad planta y equipo",
+    d: "Ingresos por ventas",
     solution: "d"
   },
 ];

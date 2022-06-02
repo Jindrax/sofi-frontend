@@ -341,7 +341,7 @@ function saveFactura() {
         totalServicios += item.total;
         break;
     }
-    impuestos += item.precio * item.impuesto;
+    impuestos += item.precio * (item.impuesto/100);
   }
   newFactura.value.costoTotal = costoTotal;
   newFactura.value.total = total.value;

@@ -5,11 +5,15 @@ export class ApiController {
   static userStore = userStore();
 
   private static url: string = process.env.NODE_ENV === "development" ? "http://localhost:443" : location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "");
-  private static headers: any = ApiController.userStore.token !== "" ? {
-    headers: {
-      Authorization: "Bearer " + ApiController.userStore.token
+  private static headers: any = {};
+
+  static setToken(token: string) {
+    ApiController.headers = {
+      headers: {
+        Authorization: "Bearer " + token
+      }
     }
-  } : {};
+  }
 
   static async post(path: string, data: any) {
     console.log(ApiController.url);
@@ -17,6 +21,7 @@ export class ApiController {
   }
 
   static async catalog<T>(path: string): Promise<T[]> {
+    console.log(ApiController.headers);
     return (await axios.get(ApiController.url + path + "/catalog", ApiController.headers)).data;
   }
 

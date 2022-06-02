@@ -2,8 +2,7 @@
   <div class="column justify-start q-gutter-y-sm">
     <responsive-table :actions="[
       {icon: 'edit_note', onClick: editAction, class: 'advance-btn'},
-      {icon: 'delete', onClick: deleteAction, class: 'revert-btn shadow-10'},
-      {icon: 'print', onClick: print, class: 'revert-btn shadow-10'}
+      {icon: 'delete', onClick: deleteAction, class: 'revert-btn shadow-10'}
     ]" :data="data" :schema="tableSchema">
     </responsive-table>
     <presentador v-if="newFlag || editFlag !== -1" :break="3">

@@ -85,16 +85,25 @@ import {helpStore} from "src/store/helpStore";
 import {userStore} from "src/store/userStore";
 import {storeToRefs} from "pinia";
 import {useRouter} from "vue-router";
+import {useItemsStore} from "src/store/Items/itemsStore";
+import {useServiciosStore} from "src/store/Servicios/serviciosStore";
+import {useClientesStore} from "src/store/Clientes/clientesStore";
+import {useActivosStore} from "src/store/Activos/activosStore";
+import {useInsumosStore} from "src/store/Insumos/insumosStore";
+import {useFacturaStore} from "src/store/Facturas/facturaStore";
+import {useComprobanteEgresoStore} from "src/store/ComprobanteEgreso/comprobanteEgresoStore";
+import {useDevolucionStore} from "src/store/Devolucion/devolucionStore";
+import {useLudificacionStore} from "src/store/ludificacionStore";
 
 const leftDrawerOpen = ref(true);
 const rightDrawerOpen = ref(false);
 
 const $q = useQuasar();
 const store = helpStore();
-const {getPermissions, name, role, cargando} = storeToRefs(userStore());
+const storeUser = userStore();
+const {getPermissions, name, role, cargando} = storeToRefs(storeUser);
 const {capitalize} = format;
 const router = useRouter()
-
 
 const helpInfo = computed(() => {
   return store.helpInfo;
@@ -120,6 +129,16 @@ function showHelp() {
 
 function logout() {
   userStore().logout();
+  useItemsStore().$reset();
+  useServiciosStore().$reset();
+  useClientesStore().$reset();
+  useActivosStore().$reset();
+  useInsumosStore().$reset();
+  useFacturaStore().$reset();
+  useComprobanteEgresoStore().$reset();
+  useDevolucionStore().$reset();
+  helpStore().$reset();
+  useLudificacionStore().$reset();
   router.push("/");
 }
 

@@ -22,6 +22,7 @@ import {userStore} from "src/store/userStore";
 import {useQuasar} from "quasar";
 import {ApiController} from "src/api/ApiController";
 import {syncBack, syncBackAdmin} from "src/api/Sincronizador";
+import {stat} from "fs";
 
 const router = useRouter();
 const store = userStore();
@@ -44,18 +45,17 @@ async function login() {
         password: pass.value
       });
       console.log(response);
-      await store.login(response.nombre, response.rol, response.token);
-      await router.push(`/usr=${store.name.replace(/\s/g,'')}/${store.getPermissions[0].key}`);
-      setTimeout(async () => {
-        switch (response.rol) {
-          case "ADMIN":
-            await syncBackAdmin();
-            break;
-          default:
-            await syncBack();
-            break;
-        }
-      }, 1000);
+      ApiController.setToken(response.token);
+      store.login(response.nombre, response.rol, response.token);
+      switch (response.rol) {
+        case "ADMIN":
+          await syncBackAdmin();
+          break;
+        default:
+          await syncBack();
+          break;
+      }
+      await router.push(`/usr=${store.name.replace(/\s/g, '')}/${store.getPermissions[0].key}`);
     } catch (e) {
       console.log(e);
       $q.notify("Credenciales invalidas");

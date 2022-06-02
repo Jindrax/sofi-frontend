@@ -52,39 +52,6 @@
             </template>
           </q-virtual-scroll>
         </q-tab-panel>
-
-        <q-tab-panel name="proveedores">
-          <q-item class="q-pa-none">
-            <q-item-section>
-              <q-input v-model="filter" autofocus class="col" label="Nit/CC o Nombre" @update:model-value="search"/>
-            </q-item-section>
-            <q-item-section side>
-              <q-btn icon="search" round @click="search"/>
-            </q-item-section>
-          </q-item>
-          <br>
-          <q-virtual-scroll
-            :items="searchData"
-            style="max-height: 30vh; min-height: 10vh;"
-            type="table"
-          >
-            <template v-slot:before>
-              <thead class="thead-sticky text-left">
-              <tr>
-                <th>Nit/CC</th>
-                <th>Nombre</th>
-              </tr>
-              </thead>
-            </template>
-
-            <template v-slot="{ item, index }">
-              <tr :key="index" @click="select(item)">
-                <td>{{ item.proveedorID }}</td>
-                <td>{{ item.nombre }}</td>
-              </tr>
-            </template>
-          </q-virtual-scroll>
-        </q-tab-panel>
       </q-tab-panels>
     </q-card>
   </q-dialog>

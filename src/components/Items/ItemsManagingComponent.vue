@@ -21,17 +21,18 @@ import {EntityFieldSchema} from "src/api/interfaces/EntityInterfaces";
 import {MeasureEngine} from "src/api/Items/MeasureEngine";
 import {SchemaFieldType} from "src/api/enums/SchemaFieldType";
 import ItemsLoadingComponent from "components/Items/ItemsLoadingComponent.vue";
+import {presentCurrency} from "src/api/utils/CurrencyFormat";
 
 const itemsSchema: EntityFieldSchema[] = [
+  {
+    field: "codigo",
+    label: "Codigo",
+    type: SchemaFieldType.STRING
+  },
   {
     field: "descripcion",
     label: "Descripcion",
     responsive: true,
-    type: SchemaFieldType.STRING
-  },
-  {
-    field: "codigo",
-    label: "Codigo",
     type: SchemaFieldType.STRING
   },
   {
@@ -76,7 +77,9 @@ const itemsSchema: EntityFieldSchema[] = [
     field: "costeUnitario",
     label: "Coste Unitario",
     responsive: true,
-    type: SchemaFieldType.NUMBER
+    type: SchemaFieldType.NUMBER,
+    formatter: presentCurrency,
+    prefix: "$"
   },
   {
     field: "costeTotal",
@@ -93,13 +96,17 @@ const itemsSchema: EntityFieldSchema[] = [
         }
       }
     },
-    showInTable: false
+    showInTable: false,
+    formatter: presentCurrency,
+    prefix: "$"
   },
   {
     field: "precio",
     label: "Precio de venta",
     responsive: true,
-    type: SchemaFieldType.NUMBER
+    type: SchemaFieldType.NUMBER,
+    formatter: presentCurrency,
+    prefix: "$"
   },
   {
     field: "fechaIngreso",

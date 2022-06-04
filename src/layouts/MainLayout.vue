@@ -56,13 +56,15 @@
     >
       <q-card class="responsive-table-btn">
         <q-card-section>
-          {{ helpInfo }}
+          <div v-if="helpInfo" v-for="linea in helpInfo.split('\n')">
+            <span>
+            {{ linea }}
+          </span>
+            <br>
+          </div>
         </q-card-section>
         <q-card-actions>
-          <q-btn label="Cerrar" @click="()=>{
-            rightDrawerOpen = false;
-            store.closeHelp();
-          }" class="revert-btn full-width"/>
+          <q-btn label="Cerrar" @click="cerrarAyuda" class="revert-btn full-width"/>
         </q-card-actions>
       </q-card>
     </q-drawer>
@@ -102,25 +104,27 @@ const $q = useQuasar();
 const store = helpStore();
 const storeUser = userStore();
 const {getPermissions, name, role, cargando} = storeToRefs(storeUser);
+const {helpInfo} = storeToRefs(store);
 const {capitalize} = format;
-const router = useRouter()
-
-const helpInfo = computed(() => {
-  return store.helpInfo;
-});
+const router = useRouter();
 
 watch(helpInfo, (value, oldValue) => {
-  if (value != "") {
-    if ($q.platform.is.desktop) {
+  if (value !== undefined) {
+    if (value.length > 0) {
       rightDrawerOpen.value = true;
-    } else {
-      $q.notify(value);
     }
+  } else {
+    $q.notify("Lo sentimos, proximamente este elemento estará documentado");
   }
 })
 
 function openDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
+}
+
+function cerrarAyuda() {
+  rightDrawerOpen.value = false;
+  store.closeHelp();
 }
 
 function showHelp() {
@@ -141,6 +145,7 @@ function logout() {
   useLudificacionStore().$reset();
   router.push("/");
 }
+
 
 </script>
 

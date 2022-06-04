@@ -7,37 +7,47 @@
     </responsive-table>
     <presentador v-if="newFlag || editFlag !== -1" :break="3">
       <template v-for="(field, i) in entitySchema">
-        <q-input v-if="field.type === SchemaFieldType.STRING" v-model="holders[field.field].value" :label="field.label"
-                 type="text" v-bind:suffix="field.suffix? field.suffix : undefined"
-                 v-bind:prefix="field.prefix? field.prefix : undefined"/>
-        <q-input v-else-if="field.type === SchemaFieldType.NUMBER" v-model.number="holders[field.field].value"
-                 :label="field.label" v-bind:suffix="field.suffix? field.suffix : undefined"
-                 v-bind:prefix="field.prefix? field.prefix : undefined"
-                 type="number"/>
-        <q-input v-else-if="field.type === SchemaFieldType.DATE" v-model="holders[field.field].value"
-                 :label="field.label" v-bind:suffix="field.suffix? field.suffix : undefined"
-                 v-bind:prefix="field.prefix? field.prefix : undefined">
-          <template v-slot:append>
-            <q-icon class="cursor-pointer" name="event">
-              <q-popup-proxy ref="qDateProxy" cover transition-hide="scale" transition-show="scale">
-                <q-date v-model="holders[field.field].value" mask="DD/MM/YYYY">
-                  <div class="row items-center justify-end">
-                    <q-btn v-close-popup color="primary" flat label="Close"/>
-                  </div>
-                </q-date>
-              </q-popup-proxy>
-            </q-icon>
-          </template>
-        </q-input>
-        <q-select v-else-if="field.type === SchemaFieldType.SELECTION" v-model="holders[field.field].value"
-                  :label="field.label"
-                  :options="field.computedOptions? computedOptions[field.field].value : field.options"/>
-        <q-input v-else-if="field.type === SchemaFieldType.DIALOG" :label="field.label"
-                 v-model="holders[field.field].value" readonly @click="()=>{
+        <helpable-input :help-key="entity+':'+field.field" v-if="field.type === SchemaFieldType.STRING" :label="field.label">
+          <q-input v-model="holders[field.field].value" :label="field.label"
+                   type="text" v-bind:suffix="field.suffix? field.suffix : undefined"
+                   v-bind:prefix="field.prefix? field.prefix : undefined"/>
+        </helpable-input>
+        <helpable-input :help-key="entity+':'+field.field" v-else-if="field.type === SchemaFieldType.NUMBER" :label="field.label">
+          <q-input v-model.number="holders[field.field].value"
+                   :label="field.label" v-bind:suffix="field.suffix? field.suffix : undefined"
+                   v-bind:prefix="field.prefix? field.prefix : undefined"
+                   type="number"/>
+        </helpable-input>
+        <helpable-input :help-key="entity+':'+field.field" v-else-if="field.type === SchemaFieldType.DATE" :label="field.label">
+          <q-input v-model="holders[field.field].value"
+                   :label="field.label" v-bind:suffix="field.suffix? field.suffix : undefined"
+                   v-bind:prefix="field.prefix? field.prefix : undefined">
+            <template v-slot:append>
+              <q-icon class="cursor-pointer" name="event">
+                <q-popup-proxy ref="qDateProxy" cover transition-hide="scale" transition-show="scale">
+                  <q-date v-model="holders[field.field].value" mask="DD/MM/YYYY">
+                    <div class="row items-center justify-end">
+                      <q-btn v-close-popup color="primary" flat label="Close"/>
+                    </div>
+                  </q-date>
+                </q-popup-proxy>
+              </q-icon>
+            </template>
+          </q-input>
+        </helpable-input>
+        <helpable-input :help-key="entity+':'+field.field" v-else-if="field.type === SchemaFieldType.SELECTION" :label="field.label">
+          <q-select v-model="holders[field.field].value"
+                    :label="field.label"
+                    :options="field.computedOptions? computedOptions[field.field].value : field.options"/>
+        </helpable-input>
+        <helpable-input :help-key="entity+':'+field.field" v-else-if="field.type === SchemaFieldType.DIALOG" :label="field.label">
+          <q-input :label="field.label"
+                   v-model="holders[field.field].value" readonly @click="()=>{
                    $q.dialog({
                       component: field.dialog.component,
                     }).onOk(payload => {holders[field.field].value = field.dialog.onSuccess(payload)}).onCancel(field.dialog.onFailure());
                  }"/>
+        </helpable-input>
       </template>
     </presentador>
     <q-btn :label="`Agregar ${entity}`" class="advance-btn" @click="addAction" v-if="!newFlag && editFlag===-1"/>
@@ -73,6 +83,7 @@ import {StandardFactory} from "src/store/Factory/StoreFactory";
 import HelpableBtn from "components/Helpables/HelpableBtn.vue";
 import {SchemaFieldType} from "src/api/enums/SchemaFieldType";
 import {getNewDateString} from "src/api/utils/DateFormat";
+import HelpableInput from "components/Helpables/HelpableInput.vue";
 
 const $q = useQuasar();
 

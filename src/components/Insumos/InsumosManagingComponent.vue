@@ -11,6 +11,7 @@ import {MeasureEngine} from "src/api/Items/MeasureEngine";
 import {SchemaFieldType} from "src/api/enums/SchemaFieldType";
 import RecursoModalSelector from "components/Recursos/RecursoModalSelector.vue";
 import {useInsumosStore} from "src/store/Insumos/insumosStore";
+import {presentCurrency} from "src/api/utils/CurrencyFormat";
 
 const insumosSchema: EntityFieldSchema[] = [
   {
@@ -34,7 +35,9 @@ const insumosSchema: EntityFieldSchema[] = [
     field: "costo",
     label: "Costo",
     responsive: true,
-    type: SchemaFieldType.NUMBER
+    type: SchemaFieldType.NUMBER,
+    formatter: presentCurrency,
+    prefix:"$"
   },
   {
     field: "impuesto",

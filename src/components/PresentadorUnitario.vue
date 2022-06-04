@@ -24,7 +24,6 @@ function unwrapSlot(slot: VNode) {
 const render = () => {
   const slot = slots.default!();
   const children = [];
-  console.log(slot);
   const unwrappedSlot = unwrapSlot(slot[0]);
   return h("div", [
     h('div', {class: "row shadow-1 presentador-mobile-top"}, h('span', {class: "col q-pa-sm"}, unwrappedSlot.label)),

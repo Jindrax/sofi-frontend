@@ -217,6 +217,9 @@ const selectedItemType = ref("ITEM");
 function selectItem() {
   $q.dialog({
     component: ItemsModalSelector,
+    componentProps: {
+      itemsOnly: false
+    }
   }).onOk((item: ItemEntity | ServicioEntity) => {
     selectedItem.value = item;
     selectedItemType.value = item.type;

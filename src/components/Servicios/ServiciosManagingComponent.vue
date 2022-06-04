@@ -9,6 +9,7 @@ import {storeToRefs} from "pinia";
 import {SchemaFieldType} from "src/api/enums/SchemaFieldType";
 import RecursoModalSelector from "components/Recursos/RecursoModalSelector.vue";
 import {EntityFieldSchema} from "src/api/interfaces/EntityInterfaces";
+import {presentCurrency} from "src/api/utils/CurrencyFormat";
 
 const serviciosSchema: EntityFieldSchema[] = [
   {
@@ -33,7 +34,9 @@ const serviciosSchema: EntityFieldSchema[] = [
     field: "precio",
     label: "Precio",
     responsive: true,
-    type: SchemaFieldType.NUMBER
+    type: SchemaFieldType.NUMBER,
+    formatter: presentCurrency,
+    prefix: "$"
   },
   {
     field: "fechaCreacion",

@@ -8,6 +8,7 @@ import {storeToRefs} from "pinia";
 import {EntityFieldSchema} from "src/api/interfaces/EntityInterfaces";
 import {SchemaFieldType} from "src/api/enums/SchemaFieldType";
 import {useActivosStore} from "src/store/Activos/activosStore";
+import {presentCurrency} from "src/api/utils/CurrencyFormat";
 
 const activosSchema: EntityFieldSchema[] = [
   {
@@ -31,7 +32,9 @@ const activosSchema: EntityFieldSchema[] = [
     field: "costo",
     label: "Costo",
     responsive: true,
-    type: SchemaFieldType.NUMBER
+    type: SchemaFieldType.NUMBER,
+    formatter: presentCurrency,
+    prefix: "$"
   },
   {
     field: "impuesto",

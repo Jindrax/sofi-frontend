@@ -4,7 +4,9 @@
       <div class="row items-center">
         <span class="titulo-pagina">Factura de venta</span>
         <q-space/>
-        <span class="comprobante">ID Factura: {{ newFactura.id }}</span>
+        <helpable-span help-key="factura:id">
+          <span class="comprobante" label="ID Factura">ID Factura: {{ newFactura.id }}</span>
+        </helpable-span>
       </div>
       <br>
       <presentador>
@@ -43,10 +45,13 @@
       <br>
       <div v-intersection="onTotalOculto" class="col-auto row items-end justify-end relative-position">
         <q-resize-observer v-if="$q.platform.is.mobile" @resize="({height})=>{stickyHeight = height}"/>
-        <span
-          class="col-auto q-pa-sm item-bordered shadow-2 total"><b>Total factura: ${{
-            presentCurrency(total)
-          }}</b></span>
+        <helpable-span help-key="factura:total">
+          <span
+            label="Total factura"
+            class="col-auto q-pa-sm item-bordered shadow-2 total"><b>Total factura: ${{
+              presentCurrency(total)
+            }}</b></span>
+        </helpable-span>
       </div>
       <br>
       <presentador>
@@ -149,6 +154,7 @@ import {useFacturaStore} from "src/store/Facturas/facturaStore";
 import HelpableBtn from "components/Helpables/HelpableBtn.vue";
 import {ServicioEntity} from "src/entities/ServicioEntity";
 import {ApiController} from "src/api/ApiController";
+import HelpableSpan from "components/Helpables/HelpableSpan.vue";
 
 const $q = useQuasar();
 const stickyHeight = ref(0);
@@ -220,6 +226,9 @@ const selectedItemType = ref("ITEM");
 function selectItem() {
   $q.dialog({
     component: ItemsModalSelector,
+    componentProps: {
+      itemsOnly: false
+    }
   }).onOk((item: ItemEntity | ServicioEntity) => {
     selectedItem.value = item;
     selectedItemType.value = item.type;

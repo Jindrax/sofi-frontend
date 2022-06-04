@@ -51,6 +51,7 @@ import {FacturaEntity} from "src/entities/FacturaEntity";
 import TercerosModalSelector from "components/Terceros/TercerosModalSelector.vue";
 import VisualizadorFactura from "components/Facturas/VisualizadorFactura.vue";
 import {ReportableEntityStore} from "src/store/ReportableEntity";
+import {userStore} from "src/store/userStore";
 
 const props = defineProps<{
   store: ReportableEntityStore,
@@ -88,6 +89,7 @@ function selectAgente() {
 }
 
 async function search() {
+  userStore().cargaIniciada();
   switch (mode.value) {
     case "ID":
       searchData.value = await props.store.findByID(filter.value);
@@ -99,6 +101,7 @@ async function search() {
       searchData.value = await props.store.findByFecha(filter.value);
       break;
   }
+  userStore().cargaFinalizada();
 }
 
 const $q = useQuasar();

@@ -14,7 +14,7 @@
         narrow-indicator
       >
         <q-tab name="items" label="Items"/>
-        <q-tab name="servicios" label="Servicios"/>
+        <q-tab name="servicios" label="Servicios" v-if="!itemsOnly"/>
       </q-tabs>
 
       <q-separator/>
@@ -94,14 +94,8 @@
 
 <script lang="ts" setup>
 
-import {Ref, ref, toRaw, unref} from "vue";
+import {Ref, ref} from "vue";
 import {useDialogPluginComponent} from 'quasar';
-import {useClientesStore} from "src/store/Clientes/clientesStore";
-import {useProveedoresStore} from "src/store/Proveedores/proveedoresStore";
-import {ClienteEntity} from "src/entities/ClienteEntity";
-import {ProveedorEntity} from "src/entities/ProveedorEntity";
-import {ClientesFindStrategy} from "src/store/Clientes/ClientesFindStrategy";
-import {ProveedoresFindComposeStrategy} from "src/store/Proveedores/proveedoresFindComposeStrategy";
 import {useItemsStore} from "src/store/Items/itemsStore";
 import {useServiciosStore} from "src/store/Servicios/serviciosStore";
 import {ItemsFindComposeStrategy} from "src/store/Items/ItemsFindComposeStrategy";
@@ -110,7 +104,9 @@ import {ItemEntity} from "src/entities/ItemEntity";
 import {ServicioEntity} from "src/entities/ServicioEntity";
 import {usePreferencesStore} from "src/store/preferencesStore";
 
-const props = defineProps();
+const props = defineProps<{
+  itemsOnly: boolean;
+}>();
 defineEmits([
   ...useDialogPluginComponent.emits
 ]);

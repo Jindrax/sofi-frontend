@@ -1,14 +1,4 @@
 import {defineStore} from "pinia";
-import {useItemsStore} from "src/store/Items/itemsStore";
-import {useServiciosStore} from "src/store/Servicios/serviciosStore";
-import {useClientesStore} from "src/store/Clientes/clientesStore";
-import {useActivosStore} from "src/store/Activos/activosStore";
-import {useInsumosStore} from "src/store/Insumos/insumosStore";
-import {useFacturaStore} from "src/store/Facturas/facturaStore";
-import {useComprobanteEgresoStore} from "src/store/ComprobanteEgreso/comprobanteEgresoStore";
-import {useDevolucionStore} from "src/store/Devolucion/devolucionStore";
-import {helpStore} from "src/store/helpStore";
-import {useLudificacionStore} from "src/store/ludificacionStore";
 
 export const userStore = defineStore("User", {
   state: () => {
@@ -61,7 +51,7 @@ export const userStore = defineStore("User", {
       name: "",
       role: "",
       permissions: permissions,
-      token: "",
+      token: {} as any,
       cargando: false
     };
   },
@@ -74,13 +64,16 @@ export const userStore = defineStore("User", {
     login(name: string, role: string, token: string) {
       this.name = name;
       this.role = role;
+    },
+    async setToken(token: any){
       this.token = token;
+      console.log(this.token);
     },
     logout() {
       this.$reset();
     },
     cargaIniciada() {
-      this.cargando = false;
+      this.cargando = true;
     },
     cargaFinalizada() {
       this.cargando = false;

@@ -44,8 +44,7 @@ async function login() {
         email: username.value,
         password: pass.value
       });
-      console.log(response);
-      ApiController.setToken(response.token);
+      await ApiController.setToken(response.token);
       store.login(response.nombre, response.rol, response.token);
       switch (response.rol) {
         case "ADMIN":

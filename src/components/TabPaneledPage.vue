@@ -34,10 +34,6 @@ const props = defineProps<{
 const normalizedTabs = props.tabs.map(normalizeName);
 const currentTab = ref(normalizedTabs[0]);
 
-onMounted(()=>{
-  console.log(currentTab.value);
-})
-
 </script>
 
 <style lang="scss" scoped>

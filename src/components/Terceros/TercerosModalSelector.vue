@@ -14,7 +14,6 @@
         narrow-indicator
       >
         <q-tab name="clientes" label="Clientes"/>
-        <q-tab name="proveedores" label="Proveedores"/>
       </q-tabs>
 
       <q-separator/>
@@ -59,7 +58,7 @@
 
 <script lang="ts" setup>
 
-import {Ref, ref, toRaw, unref} from "vue";
+import {Ref, ref} from "vue";
 import {useDialogPluginComponent} from 'quasar';
 import {useClientesStore} from "src/store/Clientes/clientesStore";
 import {useProveedoresStore} from "src/store/Proveedores/proveedoresStore";
